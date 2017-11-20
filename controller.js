@@ -4,8 +4,6 @@ var config = require('./public/config');
 var rpiDhtSensor = require('rpi-dht-sensor');
 var fs = require('fs');
 
-var data;
-
 //Configuration de la base de donnes
 var db = new Influx.InfluxDB({
   host: config.host,
@@ -16,12 +14,11 @@ var db = new Influx.InfluxDB({
 //Fonction de rendu de l'index (route /)
 var Index = function(req, res) {
 
+  readAddTemp();
+  queryData();
+
   res.render('index', {
-    variable: data
-  }, function(err, html) {
-    readAddTemp();
-    res.send(html);
-    if (err) throw err;
+    variable: queryData
   });
 };
 
@@ -57,8 +54,8 @@ function readAddTemp() {
 
 
 
-var queryData = function(data) { //Base de données vers JSON
-  db.query('select * from dht order by time desc limit 100').then(results => {
+var queryData = function() { //Base de données vers JSON
+var query = db.query('select * from dht order by time desc limit 100').then(results => {
 
     var data = JSON.stringify({
       results
@@ -70,8 +67,11 @@ var queryData = function(data) { //Base de données vers JSON
 
     });
 
+    return data;
 
   });
+
+return query;
 
 };
 
