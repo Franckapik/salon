@@ -42,8 +42,19 @@
 						<div class="inner">
 							<div class="logo"><span class="icon fa-diamond"></span></div>
 							<h2>Température du salon</h2>
-							<%= variable %>
-							<span class='tableauTemp'></span>
+
+							<span class='tableauTemp'>
+<%= dataDB %>
+
+								<ul>
+    <% dataDB.forEach(function(tab) { %>
+        <li><%= tab.time %> - <%= tab.temperature %></li>
+    <% }); %>
+</ul> </span>
+
+<canvas id="line-chart" width="800" height="450"></canvas>
+
+
 						</div>
 					</section>
 
@@ -172,7 +183,38 @@
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+			<script>
+			var dataDB = {<%= dataDB%>};
+			console.log(dataDB.time[0]);
+			new Chart(document.getElementById("line-chart"), {
+			  type: 'line',
+			  data: {
+			    labels: [1,2,3,4,5,6,7,8,9],
+			    datasets: [{
+			        data: [86,114,106,106,107,111,133,221,783,2478],
+			        label: "Température",
+			        borderColor: "#3e95cd",
+			        fill: false
+			      }, {
+			        data: [282,350,411,502,635,809,947,1402,3700,5267],
+			        label: "Humidité",
+			        borderColor: "#8e5ea2",
+			        fill: false
+			      }
+			    ]
+			  },
+			  options: {
+			    title: {
+			      display: true,
+			      text: 'Température/Humidité'
+			    }
+			  }
+			});
+
+
+
+			</script>
 			<script src="assets/js/main.js"></script>
 
 	</body>
