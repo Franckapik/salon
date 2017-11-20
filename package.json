@@ -1,0 +1,40 @@
+{
+  "name": "raspberry-pi-mjpeg-server",
+  "version": "0.0.8",
+  "description": "Node.js mjpeg streaming server for the Raspberry PI camera module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/john-doherty/raspberry-pi-mjpeg-server.git"
+  },
+  "homepage": "https://github.com/john-doherty/raspberry-pi-mjpeg-server#readme",
+  "bugs": {
+    "url": "https://github.com/john-doherty/raspberry-pi-mjpeg-server/issues"
+  },
+  "author": "John Doherty <contact@johndoherty.info> (www.johndoherty.info)",
+  "license": "ISC",
+  "keywords": [
+    "raspberry",
+    "pi",
+    "camera",
+    "rpi",
+    "mjpeg",
+    "server",
+    "stream",
+    "motion",
+    "jpeg"
+  ],
+  "dependencies": {
+    "cron": "^1.3.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "html": "^1.0.0",
+    "influx": "^5.0.7",
+    "moment": "^2.19.1",
+    "rpi-dht-sensor": "^0.1.1"
+  }
+}
