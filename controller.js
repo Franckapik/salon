@@ -17,11 +17,8 @@ var db = new Influx.InfluxDB({
 
 
 var Index = function(req, res) {
-    queryData().then(function(data) {
-      res.render('index', {
-    dataDB: data
-  });
-});
+    queryData();
+    res.render('index', {});
 };
 
 var dht = new rpiDhtSensor.DHT11(4);
@@ -54,28 +51,17 @@ function readAddTemp() {
   }
 }
 
+var queryData = function() { //Base de données vers object javascript
+  var query = db.query('select * from dht order by time desc limit 24').then(results => {
 
+  var data = JSON.stringify({ results });
 
-var queryData = function() { //Base de données vers JSON
-  var query = db.query('select * from dht order by time desc limit 100').then(results => {
-    console.log(results);
-    var data = JSON.stringify({
-      results
-    });
+  fs.writeFile('./views/message.json', data, (err) => {
+                if (err) throw err;
+                console.log('DB ---> message.json');
+            });
 
-    fs.writeFile('./public/message.json', results, (err) => {
-      if (err) throw err;
-      console.log('DB ---> Message.json');
-
-    });
-
-    return results;
-
-  });
-
-  return query;
-
-};
+})};
 
 exports.Index = Index;
 exports.readAddTemp = readAddTemp;
